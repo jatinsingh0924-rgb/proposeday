@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Propose Day 💍</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    height:100vh;
+    width:100vw;
+    background: linear-gradient(135deg,#ff9a9e,#fad0c4);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    font-family:'Segoe UI',cursive;
+    color:#fff;
+}
+
+.container{
+    text-align:center;
+    padding:30px;
+    z-index:2;
+    animation:fadeIn 1.6s ease;
+}
+
+h1{
+    font-size:3.2rem;
+    margin-bottom:10px;
+}
+
+.name{
+    font-size:1.7rem;
+    margin-bottom:20px;
+}
+
+.propose{
+    font-size:4.8rem;
+    margin:15px 0;
+    animation:pulse 1.5s infinite;
+}
+
+.question{
+    font-size:1.5rem;
+    line-height:1.8;
+    margin:20px 0;
+}
+
+.buttons{
+    margin-top:25px;
+}
+
+button{
+    display:block;
+    margin:10px auto;
+    padding:13px 30px;
+    font-size:1.1rem;
+    border:none;
+    border-radius:30px;
+    cursor:pointer;
+    background:#fff;
+    color:#ff6f91;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:scale(1.1);
+    background:#ffe0e8;
+}
+
+#noBtn{
+    position:absolute;
+    background:#ff6f91;
+    color:white;
+}
+
+#loveMessage{
+    display:none;
+    margin-top:25px;
+    font-size:1.4rem;
+    line-height:1.9;
+    animation:fadeIn 1.2s ease;
+}
+
+.hug{
+    font-size:4.2rem;
+    margin-bottom:10px;
+    animation:hug 1.4s infinite;
+}
+
+.tap{
+    font-size:1rem;
+    margin-top:12px;
+    opacity:0.9;
+}
+
+/* Confetti */
+.confetti{
+    position:fixed;
+    width:10px;
+    height:10px;
+    top:-10px;
+    animation:confettiFall linear forwards;
+}
+
+@keyframes confettiFall{
+    to{
+        transform:translateY(110vh) rotate(720deg);
+        opacity:0;
+    }
+}
+
+@keyframes pulse{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.25);}
+    100%{transform:scale(1);}
+}
+
+@keyframes hug{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.15);}
+    100%{transform:scale(1);}
+}
+
+@keyframes fadeIn{
+    from{opacity:0;transform:translateY(30px);}
+    to{opacity:1;transform:translateY(0);}
+}
+
+/* Floating hearts */
+.heart{
+    position:absolute;
+    bottom:-20px;
+    font-size:22px;
+    animation:floatUp linear infinite;
+    opacity:0.85;
+}
+
+@keyframes floatUp{
+    from{transform:translateY(0);opacity:1;}
+    to{transform:translateY(-110vh);opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<audio id="music" loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+</audio>
+
+<div class="container" onclick="startMusic()">
+    <h1>Happy Propose Day 💍</h1>
+    <div class="name">Akanksha, my bholu 💞</div>
+
+    <div class="propose">💍💖</div>
+
+    <div class="question">
+        From silly talks to silent hugs,<br>
+        from chaos to calm 😭💗<br><br>
+        Will you be my <b>forever bholu</b>?<br>
+        Let’s build our tiny world of<br>
+        <i>dholu & bholu… every day, every lifetime 🫶</i>
+    </div>
+
+    <div class="buttons" id="choices">
+        <button onclick="acceptLove()">Yes ❤️</button>
+        <button onclick="acceptLove()">I’m already yours 💞</button>
+        <button onclick="acceptLove()">You are my dholu 🥹</button>
+        <button id="noBtn">No 💔</button>
+    </div>
+
+    <div id="loveMessage">
+        <div class="hug">🤗💖🤗</div>
+        <p>
+            I love you a lot babesieeeee, my bholi 😭💞<br><br>
+            You are my comfort, my safe place, my home.<br>
+            With you, love feels soft, real, and endless.<br>
+            Forever your dholu 🤍
+        </p>
+    </div>
+
+    <div class="tap">Tap anywhere to feel the magic 💖</div>
+</div>
+
+<script>
+let noCount = 0;
+
+function startMusic(){
+    document.getElementById("music").play();
+}
+
+function acceptLove(){
+    document.getElementById("choices").style.display="none";
+    document.getElementById("loveMessage").style.display="block";
+    document.getElementById("music").play();
+    launchConfetti();
+}
+
+// Floating hearts
+function createHeart(){
+    const heart=document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML="💖";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.animationDuration=(3+Math.random()*3)+"s";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),6000);
+}
+setInterval(createHeart,400);
+
+// Runaway + transform No button 😈
+const noBtn = document.getElementById("noBtn");
+
+noBtn.addEventListener("mouseover", () => {
+    noCount++;
+
+    if(noCount >= 5){
+        noBtn.innerText = "Yes ❤️";
+        noBtn.onclick = acceptLove;
+        noBtn.style.background = "#fff";
+        noBtn.style.color = "#ff6f91";
+        noBtn.style.position = "static";
+        return;
+    }
+
+    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+});
+
+// Confetti blast 🎉
+function launchConfetti(){
+    for(let i=0;i<120;i++){
+        const conf=document.createElement("div");
+        conf.classList.add("confetti");
+        conf.style.left=Math.random()*100+"vw";
+        conf.style.background=`hsl(${Math.random()*360},100%,70%)`;
+        conf.style.animationDuration=(2+Math.random()*2)+"s";
+        document.body.appendChild(conf);
+        setTimeout(()=>conf.remove(),4000);
+    }
+}
+</script>
+
+</body>
+</html>
